@@ -44,6 +44,18 @@ server.on("request", async (request, response) => {
 
     response.end(JSON.stringify(body));
   }
+  if (request.url === "/upload" && request.method === "PUT") {
+    const fileHandle = await fs.open("./storage/image.jpeg", "w");
+    const fileStream = fileHandle.createWriteStream();
+    response.setHeader("Content-Type", "application/json");
+
+    request.pipe(fileStream);
+    request.on("end", () => {
+      response.end(
+        JSON.stringify({ message: "File was uploaded successfully!" })
+      );
+    });
+  }
 });
 
 server.listen(9000, () => {
