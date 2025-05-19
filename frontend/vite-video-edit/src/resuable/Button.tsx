@@ -1,7 +1,21 @@
-import React from "react";
+import React, { type CSSProperties, type MouseEventHandler, type ReactNode } from "react";
 import Loading from "./InlineLoading";
-
-const Button = (props) => {
+interface ButtonProps {
+  id?: string;
+  size?: "big" | "small" | "extraSmall";
+  color?: "default" | "blue" | "red" | "green" | "gray";
+  outlined?: boolean;
+  rounded?: boolean;
+  block?: boolean;
+  className?: string;
+  style?: CSSProperties;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
+  loading?: boolean;
+  children?: ReactNode;
+}
+const Button:React.FC<ButtonProps> = (props) => {
   let className = "button";
 
   switch (props.size) {

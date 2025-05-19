@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UploadingIcon from "../resuable/UploadingIcon";
-import useVideo from "../hook/useVideo";
+import { useVideo } from "../hook/useVideo";
 import Button from "../resuable/Button";
 
 const CancelToken = axios.CancelToken;
-let cancel;
-
+let cancel: () => void;
 function Uploader() {
   const { fetchVideos } = useVideo();
 
   const [isDraggedOver, setIsDraggedOver] = useState(false);
   const [fileName, setFileName] = useState("");
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
   const [progress, setProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [processing, setProcessing] = useState(false);
@@ -20,26 +19,26 @@ function Uploader() {
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
-  const handleDragStart = (e) => {
+  const handleDragStart = (e: React.DragEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
   };
 
-  const handleDragOver = (e) => {
+  const handleDragOver = (e: React.DragEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
 
     setIsDraggedOver(true);
   };
 
-  const handleDragLeave = (e) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
 
     setIsDraggedOver(false);
   };
 
-  const handleDrop = (e) => {
+  const handleDrop = (e: React.DragEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -60,13 +59,20 @@ function Uploader() {
     if (cancel) cancel();
   };
 
-  const onInputFileChange = (e) => {
-    setFileName(e.target.files[0]?.name);
-    setFile(e.target.files[0]);
-    document.querySelector("#file").value = "";
+  const onInputFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFileName(file.name);
+      setFile(file);
+    }
+
+    const fileInput = document.querySelector("#file") as HTMLInputElement | null;
+    if (fileInput) {
+      fileInput.value = "";
+    }
   };
 
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setIsUploading(true);
@@ -78,7 +84,7 @@ function Uploader() {
           filename: fileName,
         },
         onUploadProgress: (data) => {
-          const progressNumber = Math.round((100 * data.loaded) / data.total);
+          const progressNumber = Math.round((100 * data.loaded) / data.total!);
           setProgress(progressNumber);
           if (progressNumber === 100) setProcessing(true);
         },
@@ -92,7 +98,7 @@ function Uploader() {
         showMessage("File was uploaded successfully!", "success");
         fetchVideos();
       }
-    } catch (e) {
+    } catch (e: any) {
       // console.log(e.response.data);
       if (e.response && e.response.data.error)
         showMessage(e.response.data.error, "error");
@@ -100,7 +106,7 @@ function Uploader() {
     }
   };
 
-  const showMessage = (message, status) => {
+  const showMessage = (message:string, status:string) => {
     if (status === "success") {
       setSuccessMsg(message);
       setTimeout(() => {
@@ -119,11 +125,9 @@ function Uploader() {
   return (
     <form
       onSubmit={handleFormSubmit}
-      className={`box ${isDraggedOver ? "box--dragged-over" : ""} ${
-        fileName ? "box--file-selected" : ""
-      } ${isUploading ? "box--file-uploading" : ""} ${
-        successMsg ? "box--success" : ""
-      } ${errorMsg ? "box--error" : ""} ${processing ? "box--processing" : ""}`}
+      className={`box ${isDraggedOver ? "box--dragged-over" : ""} ${fileName ? "box--file-selected" : ""
+        } ${isUploading ? "box--file-uploading" : ""} ${successMsg ? "box--success" : ""
+        } ${errorMsg ? "box--error" : ""} ${processing ? "box--processing" : ""}`}
       onDrag={handleDragStart}
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}

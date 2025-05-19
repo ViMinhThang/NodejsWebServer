@@ -1,7 +1,14 @@
-import React from "react";
+import React, { type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
-const Modal = ({ children, header, open, type, onClose }) => {
+interface ModalProps {
+  children: ReactNode;
+  header: string;
+  open: boolean;
+  type?: "small" | string;
+  onClose: () => void;
+}
+const Modal: React.FC<ModalProps> = ({ children, header, open, type, onClose }) => {
   let className = open ? "mdl" : "mdl u-display-none";
   if (type === "small") className += " mdl-sm";
   return createPortal(
@@ -17,7 +24,7 @@ const Modal = ({ children, header, open, type, onClose }) => {
         <div className="mdl__body">{children}</div>
       </div>
     </div>,
-    document.querySelector("#modal-root")
+    document.querySelector("#modal-root")!
   );
 };
 

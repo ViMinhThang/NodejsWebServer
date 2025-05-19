@@ -1,9 +1,28 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const Textarea = (props) => {
+
+interface TextareaProps {
+  id?: string;
+  value?: string | number | null;
+  size?: "big" | "small";
+  rounded?: boolean;
+  error?: string | boolean;
+  placeholder?: string;
+  label?: React.ReactNode;
+  help?: React.ReactNode;
+  rows?: number;
+  maxLength?: number;
+  required?: boolean;
+  onChange?: (value: string) => void;
+  onBlur?: (value: string) => void;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+const Textarea: React.FC<TextareaProps> = (props) => {
   const [value, setValue] = useState(props.value?.toString());
 
-  const input = useRef(null);
+  const input = React.useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     if (props.value) {
@@ -81,9 +100,8 @@ const Textarea = (props) => {
 
         {!props.placeholder && (
           <label
-            className={`form-text__label ${
-              value ? "form-text__label--top" : ""
-            }`}
+            className={`form-text__label ${value ? "form-text__label--top" : ""
+              }`}
             onClick={() => {
               input.current?.focus();
             }}

@@ -30,7 +30,7 @@ const Profile = () => {
     fetchData();
   }, []);
 
-  const onFormSubmit = async (e) => {
+  const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormLoading(true);
 
@@ -47,7 +47,7 @@ const Profile = () => {
   if (contentLoading)
     return (
       <div className="u-text-center u-margin-top-3">
-        <InlineLoading color="gray" />
+        <InlineLoading color="gray" className={""} />
       </div>
     );
 
@@ -59,7 +59,7 @@ const Profile = () => {
             type="text"
             label="Name"
             value={name}
-            onChange={(value) => {
+            onChange={(value: string) => {
               setName(value);
             }}
           />
@@ -69,7 +69,7 @@ const Profile = () => {
             type="text"
             label="Username"
             value={username}
-            onChange={(value) => {
+            onChange={(value: string) => {
               setUsername(value);
             }}
           />
@@ -79,7 +79,7 @@ const Profile = () => {
             type="password"
             label="Password"
             value={password}
-            onChange={(value) => {
+            onChange={(value: string) => {
               setPassword(value);
             }}
           />

@@ -6,17 +6,37 @@ import {
   Routes,
   BrowserRouter as Router,
 } from "react-router-dom";
-
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
 import Header from "./components/Header";
+import type { Video } from "./hook/useVideo";
 
-export const AppContext = createContext(null);
+interface AppContextType {
+  loggedIn: boolean | null;
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean | null>>;
+  section: string;
+  setSection: React.Dispatch<React.SetStateAction<string>>;
+  videos: Video[];
+  setVideos: React.Dispatch<React.SetStateAction<Video[]>>;
+}
+
+
+
+export const AppContext = createContext<AppContextType>({
+  loggedIn: null,
+  setLoggedIn: () => { },
+  section: "/",
+  setSection: () => { },
+  videos: [],
+  setVideos: () => { },
+});
+
 function App() {
-  const [loggedIn, setLoggedIn] = useState(null);
-  const [section, setSection] = useState("/");
-  const [videos, setVideos] = useState([]);
+  const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
+  const [section, setSection] = useState<string>("/");
+  const [videos, setVideos] = useState<Video[]>([]);
+
 
   return (
     <AppContext.Provider
@@ -33,6 +53,4 @@ function App() {
     </AppContext.Provider>
   );
 }
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<App />);
+export default App;

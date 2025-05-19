@@ -1,6 +1,8 @@
 import React from "react";
-
-const UploadingIcon = ({ animated }) => {
+interface UploadingIconProps {
+  animated?: boolean;
+}
+const UploadingIcon = ({ animated }:UploadingIconProps) => {
   return (
     <svg
       width="60px"

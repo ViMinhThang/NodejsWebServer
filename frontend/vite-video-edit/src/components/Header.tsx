@@ -2,10 +2,9 @@ import React, { useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { AppContext } from "../index";
-import Button from "../reusable/Button";
+import { AppContext } from "../App";
 import t from "../lib/tokens";
-
+import alert from "../lib/alert";
 const Header = () => {
   const { loggedIn, setLoggedIn, section, setSection } = useContext(AppContext);
   const navigate = useNavigate();

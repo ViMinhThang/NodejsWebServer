@@ -1,10 +1,37 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const Input = (props) => {
+
+
+interface InputProps {
+  id?: string;
+  value?: string | number | null;
+  size?: "big" | "small";
+  rounded?: boolean;
+  success?: boolean;
+  error?: string | boolean;
+  disabled?: boolean;
+  required?: boolean;
+  requiredWithError?: boolean;
+  lined?: boolean;
+  placeholder?: string;
+  label?: string | React.ReactNode;
+  help?: string | React.ReactNode;
+  innerInputLabel?: string | React.ReactNode;
+  shouldDivideNumberByThree?: boolean;
+  autoFocus?: boolean;
+  autoComplete?: string;
+  maxLength?: number;
+  type?: "text" | "number" | "password";
+  onChange?: (value: string) => void;
+  onBlur?: (value: string) => void;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+const Input: React.FC<InputProps> = (props) => {
   const [value, setValue] = useState(props.value?.toString());
 
-  const input = useRef(null);
-
+  const input = useRef<HTMLInputElement | null>(null);
   useEffect(() => {
     if (props.value) {
       setValue(props.value.toString());
@@ -79,9 +106,8 @@ const Input = (props) => {
                 // Add a left padding to the input because of the name label
                 if (elem)
                   // @ts-ignore
-                  elem.nextSibling.style.paddingLeft = `${
-                    elem.clientWidth + 10
-                  }px`;
+                  elem.nextSibling.style.paddingLeft = `${elem.clientWidth + 10
+                    }px`;
               }}
             >
               {props.innerInputLabel}
@@ -128,9 +154,8 @@ const Input = (props) => {
         </div>
         {!props.placeholder && (
           <label
-            className={`form-text__label ${
-              value ? "form-text__label--top" : ""
-            }`}
+            className={`form-text__label ${value ? "form-text__label--top" : ""
+              }`}
             onClick={() => {
               input.current?.focus();
             }}

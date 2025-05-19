@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, type ReactNode } from "react";
 import Modal from "../resuable/Modal";
 import axios from "axios";
 import Input from "../resuable/Input";
 import Button from "../resuable/Button";
 import alert from "../lib/alert";
 import t from "../lib/tokens";
-import useVideo from "../hook/useVideo";
+import { useVideo } from "../hook/useVideo";
 
-const UploadPhoto = (props) => {
+interface UploadPhotoProps {
+  text: ReactNode;
+  open: boolean;
+  onClose: () => void;
+  videoId?: string
+  success?: () => void;
+}
+
+const UploadPhoto: React.FC<UploadPhotoProps> = (props) => {
   // const [loading, setLoading] = useState(false); // overall modal loading
   const [resizeLoading, setResizeLoading] = useState(false); // resize button loading
   const [width, setWidth] = useState("");
@@ -15,12 +23,13 @@ const UploadPhoto = (props) => {
 
   const { video, addResize } = useVideo(props.videoId);
 
-  const onFormSubmit = async (e) => {
+  const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Check that width and height are numbers, greater than zero, and less than the
     // dimensions of the original video.
     if (
+      !video || // kiểm tra video có tồn tại
       !Number(width) ||
       !Number(height) ||
       Number(width) <= 0 ||
@@ -51,7 +60,7 @@ const UploadPhoto = (props) => {
       setWidth("");
       setHeight("");
       alert(t.alert.success.video.resized, "success");
-      addResize(width, height);
+      addResize(Number(width), Number(height));
     } catch (e) {
       alert(t.alert.error.default, "error");
     }
@@ -60,6 +69,7 @@ const UploadPhoto = (props) => {
   };
 
   const renderResizes = () => {
+    if (!video) return null;
     const dimensionsArray = Object.keys(video.resizes);
 
     // Separate processing and processed videos
@@ -94,9 +104,8 @@ const UploadPhoto = (props) => {
 
       return (
         <div
-          className={`resizes__item ${
-            isProcessing && "resizes__item--in-progress"
-          }`}
+          className={`resizes__item ${isProcessing && "resizes__item--in-progress"
+            }`}
           key={dimensions}
         >
           <div className="resizes__dimensions">
@@ -120,7 +129,7 @@ const UploadPhoto = (props) => {
 
   return (
     <Modal
-      header={`Resize ${video.name}`}
+      header={`Resize ${video!.name}`}
       open={props.open}
       onClose={() => {
         props.onClose();
@@ -134,7 +143,7 @@ const UploadPhoto = (props) => {
           label="width"
           value={width}
           required={true}
-          onChange={(value) => {
+          onChange={(value: string) => {
             setWidth(value);
           }}
         />
@@ -143,7 +152,7 @@ const UploadPhoto = (props) => {
           label="height"
           value={height}
           required={true}
-          onChange={(value) => {
+          onChange={(value: string) => {
             setHeight(value);
           }}
         />
@@ -154,7 +163,7 @@ const UploadPhoto = (props) => {
 
       <div className="resizes">
         <h4>Your Resizes:</h4>
-        {video.resizes && Object.keys(video.resizes).length ? (
+        {video!.resizes && Object.keys(video!.resizes).length ? (
           renderResizes()
         ) : (
           <div className="resizes__no-resize-message">

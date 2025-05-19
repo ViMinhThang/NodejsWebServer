@@ -1,6 +1,13 @@
 import React from "react";
 
-const InlineLoading = (props) => {
+
+interface InlineLoadingProps {
+  className: string;
+  color?: string;
+  center?: boolean,
+}
+
+const InlineLoading: React.FC<InlineLoadingProps> = (props) => {
   let className = "lds-ellipsis ";
   if (props.className) className += props.className;
 

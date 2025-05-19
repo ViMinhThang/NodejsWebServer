@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { AppContext } from "../App";
 import Input from "../resuable/Input";
 import Button from "../resuable/Button"
@@ -16,7 +16,7 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const onFormSubmit = async (e) => {
+  const onFormSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
@@ -27,8 +27,9 @@ const Login = () => {
       navigate("/");
       setSection("/");
       alert(t.alert.success.auth.loggedIn, "success");
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.log(err);
+      const e =err as AxiosError
       if (e.response && e.response.status === 401) {
         alert(t.alert.error.auth.badLoginInfo, "error");
       } else {
@@ -45,7 +46,7 @@ const Login = () => {
             type="text"
             label="Username"
             value={username}
-            onChange={(value) => {
+            onChange={(value:string) => {
               setUsername(value);
             }}
           />
@@ -55,7 +56,7 @@ const Login = () => {
             type="password"
             label="Password"
             value={password}
-            onChange={(value) => {
+            onChange={(value:string) => {
               setPassword(value);
             }}
           />
