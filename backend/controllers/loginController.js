@@ -20,7 +20,6 @@ const login = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Invalid email or password");
   }
-  res.send("auth user");
 });
 
 export { login };

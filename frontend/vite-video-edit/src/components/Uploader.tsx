@@ -74,17 +74,26 @@ function Uploader() {
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    if (!file) {
+      showMessage("Please select a file first", "error");
+      return;
+    }
+    setProcessing(false)
     setIsUploading(true);
 
     try {
-      /** @API call */
-      const { data } = await axios.post("/api/upload-video", file, {
+      const formData = new FormData();
+      formData.append("video", file);  // "video" trùng với multer.single("video")
+
+      const { data } = await axios.post("/api/videos/upload-video", formData, {
         headers: {
+          "Content-Type": "multipart/form-data",
           filename: fileName,
         },
-        onUploadProgress: (data) => {
-          const progressNumber = Math.round((100 * data.loaded) / data.total!);
+        onUploadProgress: (progressEvent) => {
+          const progressNumber = Math.round(
+            (100 * progressEvent.loaded) / (progressEvent.total ?? 1)
+          );
           setProgress(progressNumber);
           if (progressNumber === 100) setProcessing(true);
         },
@@ -94,19 +103,20 @@ function Uploader() {
       });
 
       if (data.status === "success") {
+        setProcessing(false);
         cancelUploading();
         showMessage("File was uploaded successfully!", "success");
         fetchVideos();
       }
     } catch (e: any) {
-      // console.log(e.response.data);
       if (e.response && e.response.data.error)
         showMessage(e.response.data.error, "error");
       cancelUploading();
     }
   };
 
-  const showMessage = (message:string, status:string) => {
+
+  const showMessage = (message: string, status: string) => {
     if (status === "success") {
       setSuccessMsg(message);
       setTimeout(() => {

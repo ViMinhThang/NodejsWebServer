@@ -34,7 +34,7 @@ const useVideo = (videoId?: string): { video?: Video; videos: Video[]; loading: 
       setVideos(data);
     } catch (e) {
       setVideos([])
-      alert(t.alert.error.default, "error");
+      // alert(t.alert.error.default, "error");
     }
     setLoading(false);
   };

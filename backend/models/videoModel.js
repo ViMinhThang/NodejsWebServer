@@ -14,8 +14,14 @@ const VideoSchema = mongoose.Schema({
     required: true,
   },
   dimensions: {
-    type: String,
-    required: true,
+    width: {
+      type: String,
+      required: false,
+    },
+    height: {
+      type: String,
+      required: false,
+    },
   },
   userId: {
     type: String,
@@ -30,7 +36,7 @@ const VideoSchema = mongoose.Schema({
       width_height: {
         processing: {
           type: Boolean,
-          required: true,
+          required: false,
         },
       },
     },
@@ -38,4 +44,4 @@ const VideoSchema = mongoose.Schema({
 });
 
 const Video = mongoose.model("VideoSchema", VideoSchema);
-export default Video
+export default Video;
