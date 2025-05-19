@@ -33,6 +33,7 @@ const useVideo = (videoId?: string): { video?: Video; videos: Video[]; loading: 
       const { data } = await axios.get("/api/videos");
       setVideos(data);
     } catch (e) {
+      setVideos([])
       alert(t.alert.error.default, "error");
     }
     setLoading(false);

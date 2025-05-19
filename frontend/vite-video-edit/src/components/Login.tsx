@@ -16,20 +16,20 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const onFormSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
+  const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       /** @API call */
-      await axios.post("/api/login", { username, password });
+      await axios.post("/api/login", { email: username, password });
       setLoggedIn(true);
       navigate("/");
       setSection("/");
       alert(t.alert.success.auth.loggedIn, "success");
     } catch (err) {
       console.log(err);
-      const e =err as AxiosError
+      const e = err as AxiosError
       if (e.response && e.response.status === 401) {
         alert(t.alert.error.auth.badLoginInfo, "error");
       } else {
@@ -46,7 +46,7 @@ const Login = () => {
             type="text"
             label="Username"
             value={username}
-            onChange={(value:string) => {
+            onChange={(value: string) => {
               setUsername(value);
             }}
           />
@@ -56,7 +56,7 @@ const Login = () => {
             type="password"
             label="Password"
             value={password}
-            onChange={(value:string) => {
+            onChange={(value: string) => {
               setPassword(value);
             }}
           />

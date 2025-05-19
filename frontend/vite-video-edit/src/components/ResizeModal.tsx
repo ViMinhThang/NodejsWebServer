@@ -129,7 +129,7 @@ const UploadPhoto: React.FC<UploadPhotoProps> = (props) => {
 
   return (
     <Modal
-      header={`Resize ${video!.name}`}
+      header={video ? `Resize ${video.name}` : "Resize Video"}
       open={props.open}
       onClose={() => {
         props.onClose();
@@ -137,53 +137,48 @@ const UploadPhoto: React.FC<UploadPhotoProps> = (props) => {
         setHeight("");
       }}
     >
-      <p className="">{props.text}</p>
-      <form className="resize-input" onSubmit={onFormSubmit}>
-        <Input
-          label="width"
-          value={width}
-          required={true}
-          onChange={(value: string) => {
-            setWidth(value);
-          }}
-        />
-        <span>&times;</span>
-        <Input
-          label="height"
-          value={height}
-          required={true}
-          onChange={(value: string) => {
-            setHeight(value);
-          }}
-        />
-        <Button color="blue" type="submit" loading={resizeLoading}>
-          Resize
-        </Button>
-      </form>
-
-      <div className="resizes">
-        <h4>Your Resizes:</h4>
-        {video!.resizes && Object.keys(video!.resizes).length ? (
-          renderResizes()
-        ) : (
-          <div className="resizes__no-resize-message">
-            You haven't resized this video yet.
-          </div>
-        )}
-      </div>
-
-      {/* <p className="image__upload--error">{error}</p> */}
-
-      {/* Loading section */}
-      {/* {loading && (
-        <div className="image__upload--loading margin-top-1">
-          <div className="center-content">
-            <Loading />
-          </div>
+      {/* Nếu chưa có video, hiển thị thông báo */}
+      {!video ? (
+        <div className="resizes__no-video-message">
+          No video found or still loading...
         </div>
-      )} */}
+      ) : (
+        <>
+          <p>{props.text}</p>
+          <form className="resize-input" onSubmit={onFormSubmit}>
+            <Input
+              label="width"
+              value={width}
+              required={true}
+              onChange={(value: string) => setWidth(value)}
+            />
+            <span>&times;</span>
+            <Input
+              label="height"
+              value={height}
+              required={true}
+              onChange={(value: string) => setHeight(value)}
+            />
+            <Button color="blue" type="submit" loading={resizeLoading}>
+              Resize
+            </Button>
+          </form>
+
+          <div className="resizes">
+            <h4>Your Resizes:</h4>
+            {Object.keys(video.resizes).length ? (
+              renderResizes()
+            ) : (
+              <div className="resizes__no-resize-message">
+                You haven't resized this video yet.
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </Modal>
   );
+
 };
 
 export default UploadPhoto;

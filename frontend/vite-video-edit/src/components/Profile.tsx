@@ -18,8 +18,8 @@ const Profile = () => {
     try {
       /** @API call */
       const { data } = await axios.get("/api/user");
-      setName(data.name);
-      setUsername(data.username);
+      setName(data.user.full_name);
+      setUsername(data.user.full_name);
     } catch (e) {
       alert(t.alert.error.default, "error");
     }
