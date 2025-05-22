@@ -86,6 +86,7 @@ const extractedAudio = asyncHandler(async (req, res, next) => {
 });
 
 const getvideos = asyncHandler(async (req, res, next) => {
+  console.log(1)
   const videos = await Video.find({ userId: req.user._id });
   res.status(200).json(videos);
 });
