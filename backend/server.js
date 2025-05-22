@@ -40,13 +40,18 @@ const startServer = async () => {
       );
       res.sendStatus(200);
     });
-    app.use((req, res, next) => {
-      res.setHeader(
-        "Access-Control-Allow-Origin",
-        "https://nodejs-web-server-five.vercel.app"
-      );
+    app.use(/(.*)/, (req, res) => {
+      res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
       res.setHeader("Access-Control-Allow-Credentials", "true");
-      next();
+      res.setHeader(
+        "Access-Control-Allow-Methods",
+        "GET,POST,PUT,DELETE,OPTIONS"
+      );
+      res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Authorization, filename"
+      );
+      res.sendStatus(200);
     });
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
