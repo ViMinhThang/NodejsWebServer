@@ -11,22 +11,16 @@ import cors from "cors";
 const port = process.env.PORT || 5000;
 
 dotenv.config();
-const corsOptions = {
-  origin: "https://nodejs-web-server-five.vercel.app",
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  credentials: true,
-  allowedHeaders: ["Content-Type", "Authorization", "filename"],
-};
+
 const startServer = async () => {
   try {
     await connectDB();
 
     const app = express();
-    app.use(cors(corsOptions));
+    app.use(cors());
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(cookieParser());
-    app.options(/(.*)/, cors(corsOptions));
     app.get("/", (req, res) => {
       res.send("API is running");
     });
