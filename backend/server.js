@@ -16,7 +16,14 @@ const allowedOrigin = "https://nodejs-web-server-five.vercel.app";
 const startServer = async () => {
   try {
     await connectDB();
-
+    app.use((req, res, next) => {
+      res.header(
+        "Access-Control-Allow-Origin",
+        "https://nodejs-web-server-five.vercel.app"
+      );
+      res.header("Access-Control-Allow-Credentials", "true");
+      next();
+    });
     const app = express();
     app.use(
       cors({
