@@ -17,7 +17,7 @@ const Profile = () => {
     setContentLoading(true);
     try {
       /** @API call */
-      const { data } = await axios.get("/api/user");
+      const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user`);
       setName(data.user.full_name);
       setUsername(data.user.full_name);
     } catch (e) {

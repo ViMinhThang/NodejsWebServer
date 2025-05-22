@@ -86,6 +86,7 @@ function Uploader() {
       formData.append("video", file);  // "video" trùng với multer.single("video")
 
       const { data } = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/videos/upload-video`, formData, {
+        withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",
           filename: fileName,
