@@ -31,6 +31,7 @@ const startServer = async () => {
       cors({
         origin: allowedOrigin,
         credentials: true,
+        allowedHeaders: ["Content-Type", "Authorization", "filename", "user`"],
       })
     );
     app.use(cookieParser());
