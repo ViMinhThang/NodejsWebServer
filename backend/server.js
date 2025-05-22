@@ -23,8 +23,6 @@ const startServer = async () => {
       cors({
         origin: allowedOrigin,
         credentials: true,
-        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        allowedHeaders: ["Content-Type", "Authorization", "filename", "user"],
       })
     );
     app.use(express.json());
