@@ -17,14 +17,17 @@ const startServer = async () => {
   try {
     await connectDB();
     const app = express();
-    app.use(cookieParser());
 
     app.use(
       cors({
         origin: allowedOrigin,
         credentials: true,
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization", "filename", "user`"],
       })
     );
+    app.use(cookieParser());
+
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.get("/", (req, res) => {
