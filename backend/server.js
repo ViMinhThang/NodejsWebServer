@@ -21,9 +21,12 @@ const startServer = async () => {
     app.use(
       cors({
         origin: allowedOrigin,
-        credentials: true, // Nếu bạn dùng cookie / session / auth
+        credentials: true,
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization", "filename"],
       })
     );
+
     app.options(
       "/api/videos/upload-video",
       cors({
