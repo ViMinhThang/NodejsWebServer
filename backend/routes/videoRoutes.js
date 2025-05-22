@@ -41,7 +41,7 @@ const router = express.Router();
 router.route("/").get(protect, getvideos);
 router
   .route("/upload-video")
-  .post(generateVideoId, upload.single("video"), uploadVideo);
+  .post(protect, generateVideoId, upload.single("video"), uploadVideo);
 router.route("/get-video-asset").get(getVideoAsset);
 router.route("/extract-audio").patch(extractedAudio);
 router.route("/resize").put(resizeVideo)
