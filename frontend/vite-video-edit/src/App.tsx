@@ -1,7 +1,5 @@
 import React, { createContext, useState } from "react";
-import ReactDOM from "react-dom/client";
 import {
-  Navigate,
   Route,
   Routes,
   BrowserRouter as Router,

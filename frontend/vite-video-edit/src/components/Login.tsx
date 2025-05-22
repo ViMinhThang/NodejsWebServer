@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import { AppContext } from "../App";
@@ -12,7 +12,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const { loggedIn, setLoggedIn, setSection } = useContext(AppContext);
+  const { setLoggedIn, setSection } = useContext(AppContext);
 
   const navigate = useNavigate();
 
