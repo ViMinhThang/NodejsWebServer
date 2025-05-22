@@ -16,7 +16,6 @@ const allowedOrigin = "https://nodejs-web-server-five.vercel.app";
 const startServer = async () => {
   try {
     await connectDB();
-i 
     const app = express();
     app.use(cookieParser());
 
