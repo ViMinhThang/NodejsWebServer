@@ -57,17 +57,11 @@ const uploadVideo = asyncHandler(async (req, res, next) => {
       message: "The file was uploaded successfully",
       video,
     });
-  } catch (error) {
-    console.error("Error in uploadVideo:", error);
-    try {
-      await deleteFolder(videoFolder);
-    } catch (delErr) {
-      console.error("Failed to delete folder:", delErr);
+  } catch (e) {
+    util.deleteFolder(`./storage/${videoId}`);
+    if (e.code !== ECONNRESET) {
+      return handleErr(e);
     }
-    res.status(500).json({
-      status: "error",
-      message: error.message || "Server error during video upload",
-    });
   }
 });
 
