@@ -26,7 +26,7 @@ const startServer = async () => {
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(cookieParser());
-    app.options("*", cors(corsOptions));
+    app.options(/(.*)/, cors(corsOptions));
     app.get("/", (req, res) => {
       res.send("API is running");
     });
