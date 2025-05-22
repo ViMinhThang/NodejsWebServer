@@ -1,5 +1,5 @@
-import Video from "../models/videoModel";
-import { deleteFile } from "../util/util";
+import Video from "../models/videoModel.js";
+import { deleteFile } from "../util/util.js";
 import { resize } from "./FF.js";
 class JobQueue {
   constructor() {
@@ -9,18 +9,19 @@ class JobQueue {
   async init() {
     const videos = await Video.find();
     videos.forEach((video) => {
-      Object.keys(video.resizes).forEach((key) => {
-        if (video.resizes[key].processing) {
+      for (const [key, value] of video.resizes.entries()) {
+        if (value.processing) {
           const [width, height] = key.split("x");
           this.enqueue({
             type: "resize",
             videoId: video._id,
-            width,
-            height,
+            width: Number(width),
+            height: Number(height),
           });
         }
-      });
+      }
     });
+    return this;
   }
   enqueue(job) {
     this.jobs.push(job);
@@ -33,17 +34,22 @@ class JobQueue {
     if (this.currentJob) return;
     this.currentJob = this.dequeue();
     if (!this.currentJob) return;
-    this.executeNext(this.currentJob);
+    this.execute(this.currentJob);
   }
   async execute(job) {
     if (job.type === "resize") {
       const { videoId, width, height } = job;
       const video = await Video.findOne({ id: videoId });
-      const originalVideoPath = `./storage/${video._id}/original.${video.extension}`;
-      const targetPath = `./storage/${video._id}/${width}x${height}.${video.extension}`;
+      const originalVideoPath = `./storage/${video.id}/original.${video.extension}`;
+      const targetPath = `./storage/${video.id}/${width}x${height}.${video.extension}`;
       try {
+        console.log("Enqueue resize job with", { videoId, width, height });
         await resize(originalVideoPath, targetPath, width, height);
-        video.resizes[`${width}x${height}`].processing = false;
+        const resizeEntry = video.resizes.get(`${width}x${height}`);
+        if (resizeEntry) {
+          resizeEntry.processing = false;
+          video.resizes.set(`${width}x${height}`, resizeEntry);
+        }
         await video.save();
         console.log(
           "Done resizing! Number of Jobs remaning:",

@@ -8,7 +8,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder.js",
     "data:destroy": "node backend/seeder.js -d",
-    "dev:cluster": "concurrently \"npm run server\" \"npm run client\""
+    "dev:cluster": "concurrently \"npm run cluster\" \"npm run client\""
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",

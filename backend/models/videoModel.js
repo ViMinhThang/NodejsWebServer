@@ -31,16 +31,20 @@ const VideoSchema = mongoose.Schema({
     type: Boolean,
     required: false,
   },
-  resizes: [
-    {
-      width_height: {
+  resizes: {
+    type: Map,
+    of: new mongoose.Schema(
+      {
         processing: {
           type: Boolean,
           required: false,
+          default: false,
         },
       },
-    },
-  ],
+      { _id: false }
+    ),
+    default: {},
+  },
 });
 
 const Video = mongoose.model("Video", VideoSchema);

@@ -3,7 +3,8 @@ import {
   getVideoAsset,
   getvideos,
   uploadVideo,
-  extractedAudio
+  extractedAudio,
+  resizeVideo
 } from "../controllers/videoController.js";
 import { protect } from "../middleware/authMiddleware.js";
 import multer from "multer";
@@ -43,5 +44,5 @@ router
   .post(protect, generateVideoId, upload.single("video"), uploadVideo);
 router.route("/get-video-asset").get(getVideoAsset);
 router.route("/extract-audio").patch(extractedAudio);
-router.route("/resize").put()
+router.route("/resize").put(resizeVideo)
 export default router;

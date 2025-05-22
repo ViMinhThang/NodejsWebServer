@@ -6,7 +6,7 @@ import alert from "../lib/alert";
 import Button from "../resuable/Button";
 import ResizeModal from "./ResizeModal";
 
-import { useVideo } from "../hook/useVideo";
+import useVideo from "../hook/useVideo";
 interface ResizeModalData {
   width: number;
   height: number;
@@ -98,7 +98,7 @@ const Videos = () => {
             {/** @API call */}
             <a
               className="button button-small button-blue"
-              href={`/get-video-asset?videoId=${video.id}&type=original`}
+              href={`/api/videos/get-video-asset?videoId=${video.id}&type=original`}
             >
               Download Video
             </a>

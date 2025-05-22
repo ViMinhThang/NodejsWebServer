@@ -36,7 +36,6 @@ const uploadVideo = asyncHandler(async (req, res, next) => {
       dimensions,
       userId: req.user._id,
       extractedAudio: false,
-      resizes: {},
     });
     await video.save();
 
@@ -100,8 +99,8 @@ const resizeVideo = asyncHandler(async (req, res, next) => {
   const videoId = req.body.videoId;
   const width = Number(req.body.width);
   const height = Number(req.body.height);
-  const video =await Video.findOne({ id: videoId });
-  video.resizes[`${width}x${height}`] = { processing: true };
+  const video = await Video.findOne({ id: videoId });
+  video.resizes.set(`${width}x${height}`, { processing: true });
   await video.save();
   if (cluster.isPrimary) {
     jobs.enqueue({
@@ -142,6 +141,17 @@ const getVideoAsset = asyncHandler(async (req, res, next) => {
       mimeType = "audio/aac";
       filename = `${video.name}-audio.aac`;
       break;
+    case "resize":
+      file = await fs.open(
+        `./storage/${video.id}/${req.query.dimensions}.${video.extension}`
+      );
+      mimeType = "video/mp4";
+      filename = `${video.name}.${video.extension}`;
+      break;
+    case "original":
+      file = await fs.open(`./storage/${video.id}/original.${video.extension}`);
+      mimeType = "video/mp4";
+      filename = `${video.name}.${video.extension}`;
   }
   try {
     const stat = await file.stat();

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UploadingIcon from "../resuable/UploadingIcon";
-import { useVideo } from "../hook/useVideo";
+import useVideo from '../hook/useVideo';
 import Button from "../resuable/Button";
 
 const CancelToken = axios.CancelToken;

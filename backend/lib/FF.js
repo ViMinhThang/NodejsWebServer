@@ -125,7 +125,7 @@ const resize = (originalPath, targetPath, width, height) => {
       "copy",
       "-threads",
       "2",
-      "y",
+      "-y",
       targetPath,
     ]);
     ffmpeg.on("close", (code) => {
@@ -134,6 +134,9 @@ const resize = (originalPath, targetPath, width, height) => {
       } else {
         reject(`FFmpeg existed with this code:${code}`);
       }
+    });
+     ffmpeg.stderr.on("data", (data) => {
+      console.error(`ffmpeg stderr: ${data}`);
     });
     ffmpeg.on("error", (err) => {
       reject(err);

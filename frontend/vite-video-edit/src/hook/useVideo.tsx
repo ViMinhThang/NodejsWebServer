@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useContext, type Key } from "react";
 import { AppContext } from "../App";
-import t from "../lib/tokens";
 import axios from "axios";
 
-import alert from "../lib/alert";
 interface Video {
   id: string;
   extension: any;
@@ -93,5 +91,5 @@ const useVideo = (videoId?: string): { video?: Video; videos: Video[]; loading: 
   };
 };
 
-export { useVideo }; export type { Video };
-
+export default useVideo;
+export type { Video };

@@ -5,8 +5,7 @@ import Input from "../resuable/Input";
 import Button from "../resuable/Button";
 import alert from "../lib/alert";
 import t from "../lib/tokens";
-import { useVideo } from "../hook/useVideo";
-
+import useVideo from '../hook/useVideo';
 interface UploadPhotoProps {
   text: ReactNode;
   open: boolean;
@@ -117,7 +116,7 @@ const UploadPhoto: React.FC<UploadPhotoProps> = (props) => {
             /** @API call */
             <a
               className="button button-blue button-small"
-              href={`/get-video-asset?videoId=${props.videoId}&type=resize&dimensions=${dimensions}`}
+              href={`/api/videos/get-video-asset?videoId=${props.videoId}&type=resize&dimensions=${dimensions}`}
             >
               Download
             </a>
