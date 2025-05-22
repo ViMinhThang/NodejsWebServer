@@ -51,7 +51,6 @@ const startServer = async () => {
         "Access-Control-Allow-Headers",
         "Content-Type, Authorization, filename"
       );
-      res.sendStatus(200);
     });
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
