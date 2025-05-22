@@ -1,7 +1,8 @@
 import  { useState, useEffect, useContext } from "react";
 import { AppContext } from "../App";
 import axios from "axios";
-
+import t from "../lib/tokens"
+import alert from "../lib/alert";
 interface Video {
   id: string;
   extension: any;
@@ -32,7 +33,7 @@ const useVideo = (videoId?: string): { video?: Video; videos: Video[]; loading: 
       setVideos(data);
     } catch (e) {
       setVideos([])
-      // alert(t.alert.error.default, "error");
+      alert(t.alert.error.default, "error");
     }
     setLoading(false);
   };
