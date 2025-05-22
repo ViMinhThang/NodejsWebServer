@@ -19,7 +19,7 @@ interface Dimension {
   width: number;
   height: number;
 }
-axios.defaults.withCredentials
+
 const useVideo = (videoId?: string): { video?: Video; videos: Video[]; loading: boolean; addResize: (width: number, height: number) => void, fetchVideos: () => Promise<void>, extractedAudioTrue: (videoId: string) => void } => {
   const { videos, setVideos } = useContext(AppContext); // the complete list of videos
   const [loading, setLoading] = useState(true); // loading for fetching the videos
