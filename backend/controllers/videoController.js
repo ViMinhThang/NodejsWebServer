@@ -59,8 +59,8 @@ const uploadVideo = asyncHandler(async (req, res, next) => {
     });
   } catch (e) {
     deleteFolder(`./storage/${videoId}`);
-    if (e.code !== ECONNRESET) {
-       throw new Error(`${e}`)
+    if (e.code !== "ECONNRESET") {
+      throw new Error(`${e}`);
     }
   }
 });
