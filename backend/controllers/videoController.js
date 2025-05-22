@@ -39,12 +39,19 @@ const uploadVideo = asyncHandler(async (req, res, next) => {
     });
     await video.save();
 
-    res.set(
+    res.setHeader(
       "Access-Control-Allow-Origin",
       "https://nodejs-web-server-five.vercel.app"
     );
-    res.set("Access-Control-Allow-Credentials", "true");
-
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET,POST,PUT,DELETE,OPTIONS"
+    );
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization, filename"
+    );
     res.status(201).json({
       status: "success",
       message: "The file was uploaded successfully",

@@ -27,31 +27,6 @@ const startServer = async () => {
         allowedHeaders: ["Content-Type", "Authorization", "filename"],
       })
     );
-    app.options(/(.*)/, (req, res) => {
-      res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
-      res.setHeader("Access-Control-Allow-Credentials", "true");
-      res.setHeader(
-        "Access-Control-Allow-Methods",
-        "GET,POST,PUT,DELETE,OPTIONS"
-      );
-      res.setHeader(
-        "Access-Control-Allow-Headers",
-        "Content-Type, Authorization, filename"
-      );
-      res.sendStatus(200);
-    });
-    app.use(/(.*)/, (req, res) => {
-      res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
-      res.setHeader("Access-Control-Allow-Credentials", "true");
-      res.setHeader(
-        "Access-Control-Allow-Methods",
-        "GET,POST,PUT,DELETE,OPTIONS"
-      );
-      res.setHeader(
-        "Access-Control-Allow-Headers",
-        "Content-Type, Authorization, filename"
-      );
-    });
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(cookieParser());
