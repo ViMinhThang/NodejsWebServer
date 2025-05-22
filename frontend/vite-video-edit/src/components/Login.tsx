@@ -22,7 +22,9 @@ const Login = () => {
 
     try {
       /** @API call */
-      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/login`, { email: username, password });
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/login`, { email: username, password }, {
+        withCredentials: true,
+      });
       setLoggedIn(true);
       navigate("/");
       setSection("/");
