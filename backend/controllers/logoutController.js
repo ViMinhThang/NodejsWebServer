@@ -1,7 +1,7 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 
 const logout = asyncHandler(async (req, res, next) => {
-  res.cookie("token", "", {
+  res.cookie("jwt", "", {
     httpOnly: true,
     expires: new Date(0),
   });
