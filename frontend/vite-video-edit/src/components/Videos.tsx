@@ -29,7 +29,7 @@ const Videos = () => {
 
     try {
       /** @API call */
-      await axios.patch(`/api/videos/extract-audio?videoId=${videoId}`, {
+      await axios.patch(`${import.meta.env.VITE_API_BASE_URL}/videos/extract-audio?videoId=${videoId}`, {
         videoId,
       });
       alert(t.alert.success.video.audioExtracted, "success");
@@ -48,7 +48,7 @@ const Videos = () => {
           {/** @API call */}
           <img
             className="video__thumbnail"
-            src={`/api/videos/get-video-asset?videoId=${video.id}&type=thumbnail`}
+            src={`${import.meta.env.VITE_API_BASE_URL}/videos/get-video-asset?videoId=${video.id}&type=thumbnail`}
           />
           <div className="video__name">{video.name}</div>
           <div className="video__dimensions">
@@ -78,7 +78,7 @@ const Videos = () => {
               /** @API call */
               <a
                 className="button button-small button-blue"
-                href={`/api/videos/get-video-asset?videoId=${video.id}&type=audio`}
+                href={`${import.meta.env.VITE_API_BASE_URL}/videos/get-video-asset?videoId=${video.id}&type=audio`}
               >
                 Download Audio
               </a>
@@ -98,7 +98,7 @@ const Videos = () => {
             {/** @API call */}
             <a
               className="button button-small button-blue"
-              href={`/api/videos/get-video-asset?videoId=${video.id}&type=original`}
+              href={`${import.meta.env.VITE_API_BASE_URL}/videos/get-video-asset?videoId=${video.id}&type=original`}
             >
               Download Video
             </a>

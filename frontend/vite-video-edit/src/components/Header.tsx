@@ -28,7 +28,7 @@ const Header = () => {
   const logout = async () => {
     try {
       /** @API call */
-      await axios.delete("/api/logout");
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/logout`);
       setLoggedIn(false);
       setSection("/");
       alert(t.alert.success.auth.loggedOut, "success");

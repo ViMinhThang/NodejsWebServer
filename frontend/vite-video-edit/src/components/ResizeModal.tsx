@@ -50,7 +50,7 @@ const UploadPhoto: React.FC<UploadPhotoProps> = (props) => {
 
     try {
       /** @API call */
-      await axios.put("/api/videos/resize", {
+      await axios.put(`${import.meta.env.VITE_API_BASE_URL}/videos/resize`, {
         videoId: props.videoId,
         width,
         height,
