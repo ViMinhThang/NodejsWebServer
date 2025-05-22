@@ -11,7 +11,7 @@ import cors from "cors";
 const port = process.env.PORT || 5000;
 
 dotenv.config();
-const allowedOrigin = "https://nodejs-web-server-five.vercel.app/";
+const allowedOrigin = "https://nodejs-web-server-five.vercel.app";
 
 const startServer = async () => {
   try {
