@@ -29,7 +29,9 @@ const useVideo = (videoId?: string): { video?: Video; videos: Video[]; loading: 
     setLoading(true);
     try {
       /** @API call */
-      const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/videos`, {
+      const { data } = await axios({
+        method: 'get',
+        url: `${import.meta.env.VITE_API_BASE_URL}/videos`,
         withCredentials: true,
       });
       setVideos(data);
