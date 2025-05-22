@@ -1,11 +1,8 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 
 const logout = asyncHandler(async (req, res, next) => {
-  res.cookie("jwt", "", {
-    httpOnly: true,
-    expires: new Date(0),
-  });
+  res.clearCookie("jwt");
   res.status(200).json({ message: "Logged out successfully" });
 });
 
-export default logout ;
+export default logout;
