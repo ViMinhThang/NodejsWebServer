@@ -24,3 +24,12 @@ export async function deleteFolder(folderPath) {
     throw error;
   }
 }
+
+export async function deleteFile(filePath) {
+  try {
+    await fs.unlink(filePath);
+  } catch (error) {
+    console.error("Failed to delete file:", error);
+    throw error;
+  }
+}

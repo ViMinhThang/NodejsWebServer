@@ -103,7 +103,6 @@ function Uploader() {
       });
 
       if (data.status === "success") {
-        setProcessing(false);
         cancelUploading();
         showMessage("File was uploaded successfully!", "success");
         fetchVideos();

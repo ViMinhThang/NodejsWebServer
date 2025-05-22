@@ -5,7 +5,7 @@ import axios from "axios";
 
 import alert from "../lib/alert";
 interface Video {
-  id: Key | null | undefined;
+  id: string;
   extension: any;
   name: any;
   videoId: string;
@@ -41,17 +41,20 @@ const useVideo = (videoId?: string): { video?: Video; videos: Video[]; loading: 
 
   useEffect(() => {
     if (videoId) {
-      const selectedVideo = videos.find((video) => video.videoId === videoId);
-      setVideo(selectedVideo);
-    } else {
-      setVideo((undefined));
+      const selectedVideo = videos.find((v) => v.id === videoId);
+      if (selectedVideo !== video) {
+        setVideo(selectedVideo);
+      }
+    } else if (video !== undefined) {
+      setVideo(undefined);
     }
-  }, [videoId, videos]);
+  }, [videoId, videos, video]);
+
 
   const addResize = (width: number, height: number) => {
     // Find the video in videos and add the resize to it, with processing set to true
     const updatedVideos = videos.map((video) => {
-      if (video.videoId === videoId) {
+      if (video.id === videoId) {
         return {
           ...video,
           resizes: {
@@ -69,7 +72,7 @@ const useVideo = (videoId?: string): { video?: Video; videos: Video[]; loading: 
 
   const extractedAudioTrue = (videoId: string) => {
     const updatedVideos = videos.map((video) => {
-      if (video.videoId === videoId) {
+      if (video.id === videoId) {
         return {
           ...video,
           extractedAudio: true,

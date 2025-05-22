@@ -29,7 +29,7 @@ const UploadPhoto: React.FC<UploadPhotoProps> = (props) => {
     // Check that width and height are numbers, greater than zero, and less than the
     // dimensions of the original video.
     if (
-      !video || // kiểm tra video có tồn tại
+      !video ||
       !Number(width) ||
       !Number(height) ||
       Number(width) <= 0 ||
@@ -51,7 +51,7 @@ const UploadPhoto: React.FC<UploadPhotoProps> = (props) => {
 
     try {
       /** @API call */
-      await axios.put("/api/video/resize", {
+      await axios.put("/api/videos/resize", {
         videoId: props.videoId,
         width,
         height,

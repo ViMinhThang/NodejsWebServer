@@ -29,13 +29,13 @@ const Videos = () => {
 
     try {
       /** @API call */
-      await axios.patch(`/api/video/extract-audio?videoId=${videoId}`, {
+      await axios.patch(`/api/videos/extract-audio?videoId=${videoId}`, {
         videoId,
       });
       alert(t.alert.success.video.audioExtracted, "success");
       extractedAudioTrue(videoId);
-    } catch (e) {
-      alert(t.alert.error.default, "error");
+    } catch (e: any) {
+      alert(e.response.data.message, "error");
     }
 
     setExtractAudioLoading(false);
@@ -48,7 +48,7 @@ const Videos = () => {
           {/** @API call */}
           <img
             className="video__thumbnail"
-            src={`/get-video-asset?videoId=${video.videoId}&type=thumbnail`}
+            src={`/api/videos/get-video-asset?videoId=${video.id}&type=thumbnail`}
           />
           <div className="video__name">{video.name}</div>
           <div className="video__dimensions">
@@ -67,7 +67,7 @@ const Videos = () => {
                 setResizeModalData({
                   width: 100,
                   height: 100,
-                  videoId: video.videoId,
+                  videoId: video.id,
                 });
               }}
             >
@@ -78,7 +78,7 @@ const Videos = () => {
               /** @API call */
               <a
                 className="button button-small button-blue"
-                href={`/get-video-asset?videoId=${video.videoId}&type=audio`}
+                href={`/api/videos/get-video-asset?videoId=${video.id}&type=audio`}
               >
                 Download Audio
               </a>
@@ -86,9 +86,9 @@ const Videos = () => {
               <Button
                 size="small"
                 color="blue"
-                loading={extractAudioLoading === video.videoId}
+                loading={extractAudioLoading === video.id}
                 onClick={() => {
-                  extractAudio(video.videoId);
+                  extractAudio(video.id);
                 }}
               >
                 Extract Audio
@@ -98,7 +98,7 @@ const Videos = () => {
             {/** @API call */}
             <a
               className="button button-small button-blue"
-              href={`/get-video-asset?videoId=${video.videoId}&type=original`}
+              href={`/get-video-asset?videoId=${video.id}&type=original`}
             >
               Download Video
             </a>

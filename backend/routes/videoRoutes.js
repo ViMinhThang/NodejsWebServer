@@ -1,22 +1,25 @@
 import express from "express";
-import { getvideos, uploadVideo } from "../controllers/videoController.js";
+import {
+  getVideoAsset,
+  getvideos,
+  uploadVideo,
+  extractedAudio
+} from "../controllers/videoController.js";
 import { protect } from "../middleware/authMiddleware.js";
 import multer from "multer";
-import fs from "fs"
-import path from "path"
-import crypto from "crypto"
+import fs from "fs";
+import path from "path";
+import { generateVideoId } from "../middleware/generateVideoId.js";
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    const videoId = crypto.randomBytes(4).toString("hex");
-    const uploadPath = path.join(process.cwd(), "storage/videos", videoId);
+    const uploadPath = path.join(process.cwd(), "storage", req.videoId);
     fs.mkdir(uploadPath, { recursive: true }, (err) => {
       cb(err, uploadPath);
     });
   },
   filename: function (req, file, cb) {
     const ext = file.originalname.split(".").pop();
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, `${file.fieldname}-${uniqueSuffix}.${ext}`);
+    cb(null, `original.${ext.toLowerCase()}`);
   },
 });
 const fileFilter = (req, file, cb) => {
@@ -37,5 +40,8 @@ const router = express.Router();
 router.route("/").get(protect, getvideos);
 router
   .route("/upload-video")
-  .post(protect, upload.single("video"), uploadVideo);
+  .post(protect, generateVideoId, upload.single("video"), uploadVideo);
+router.route("/get-video-asset").get(getVideoAsset);
+router.route("/extract-audio").patch(extractedAudio);
+router.route("/resize").put()
 export default router;

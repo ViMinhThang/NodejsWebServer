@@ -1,4 +1,4 @@
-const alert = (message, type = "default") => {
+const alert = (message:string, type = "default") => {
   let alert = document.querySelector("#js--alert");
 
   if (!alert) {
