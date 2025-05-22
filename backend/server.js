@@ -18,14 +18,7 @@ const startServer = async () => {
     await connectDB();
 
     const app = express();
-    app.use((req, res, next) => {
-      res.header(
-        "Access-Control-Allow-Origin",
-        "https://nodejs-web-server-five.vercel.app"
-      );
-      res.header("Access-Control-Allow-Credentials", "true");
-      next();
-    });
+
     app.use(
       cors({
         origin: allowedOrigin,
@@ -34,6 +27,27 @@ const startServer = async () => {
         allowedHeaders: ["Content-Type", "Authorization", "filename"],
       })
     );
+    app.options(/(.*)/, (req, res) => {
+      res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
+      res.setHeader("Access-Control-Allow-Credentials", "true");
+      res.setHeader(
+        "Access-Control-Allow-Methods",
+        "GET,POST,PUT,DELETE,OPTIONS"
+      );
+      res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Authorization, filename"
+      );
+      res.sendStatus(200);
+    });
+    app.use((req, res, next) => {
+      res.setHeader(
+        "Access-Control-Allow-Origin",
+        "https://nodejs-web-server-five.vercel.app"
+      );
+      res.setHeader("Access-Control-Allow-Credentials", "true");
+      next();
+    });
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(cookieParser());
