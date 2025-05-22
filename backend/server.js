@@ -26,6 +26,13 @@ const startServer = async () => {
         allowedHeaders: ["Content-Type", "Authorization", "filename", "user`"],
       })
     );
+    app.options(
+      "*",
+      cors({
+        origin: allowedOrigin,
+        credentials: true,
+      })
+    );
     app.use(cookieParser());
 
     app.use(express.json());
