@@ -88,7 +88,6 @@ function Uploader() {
       const { data } = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/videos/upload-video`, formData, {
         withCredentials: true,
         headers: {
-          Authorization: localStorage.get("token"),
           "Content-Type": "multipart/form-data",
           filename: fileName,
         },

@@ -31,9 +31,6 @@ const useVideo = (videoId?: string): { video?: Video; videos: Video[]; loading: 
       /** @API call */
       const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/videos`, {
         withCredentials: true,
-        headers: {
-          Authorization: localStorage.get("token"),
-        }
       });
       setVideos(data);
     } catch (e) {
