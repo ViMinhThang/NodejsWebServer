@@ -11,13 +11,26 @@ import cors from "cors";
 const port = process.env.PORT || 5000;
 
 dotenv.config();
+const allowedOrigin = "https://nodejs-web-server-five.vercel.app/";
 
 const startServer = async () => {
   try {
     await connectDB();
 
     const app = express();
-    app.use(cors());
+    app.use(
+      cors({
+        origin: allowedOrigin,
+        credentials: true, // Nếu bạn dùng cookie / session / auth
+      })
+    );
+    app.options(
+      "/api/videos/upload-video",
+      cors({
+        origin: allowedOrigin,
+        credentials: true,
+      })
+    );
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(cookieParser());
