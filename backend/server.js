@@ -14,7 +14,6 @@ dotenv.config();
 const corsOptions = {
   origin: "https://nodejs-web-server-five.vercel.app",
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  credentials: true,
   allowedHeaders: ["Content-Type", "Authorization", "filename"],
 };
 const startServer = async () => {
