@@ -27,7 +27,7 @@ const startServer = async () => {
       })
     );
     app.options(
-      "*",
+      `(.*)`,
       cors({
         origin: allowedOrigin,
         credentials: true,
