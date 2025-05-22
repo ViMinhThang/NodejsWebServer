@@ -26,14 +26,6 @@ const startServer = async () => {
         allowedHeaders: ["Content-Type", "Authorization", "filename"],
       })
     );
-
-    app.options(
-      "/api/videos/upload-video",
-      cors({
-        origin: allowedOrigin,
-        credentials: true,
-      })
-    );
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(cookieParser());
