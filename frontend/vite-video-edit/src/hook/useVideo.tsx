@@ -1,4 +1,4 @@
-import  { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AppContext } from "../App";
 import axios from "axios";
 import t from "../lib/tokens"
@@ -29,7 +29,9 @@ const useVideo = (videoId?: string): { video?: Video; videos: Video[]; loading: 
     setLoading(true);
     try {
       /** @API call */
-      const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/videos`);
+      const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/videos`, {
+        withCredentials: true,
+      });
       setVideos(data);
     } catch (e) {
       setVideos([])
