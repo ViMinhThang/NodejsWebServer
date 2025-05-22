@@ -23,7 +23,7 @@ const startServer = async () => {
         origin: allowedOrigin,
         credentials: true,
         methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        allowedHeaders: ["Content-Type", "Authorization", "filename", "user`"],
+        allowedHeaders: ["Content-Type", "Authorization", "filename", "user"],
       })
     );
     app.options(
@@ -31,7 +31,7 @@ const startServer = async () => {
       cors({
         origin: allowedOrigin,
         credentials: true,
-        allowedHeaders: ["Content-Type", "Authorization", "filename", "user`"],
+        allowedHeaders: ["Content-Type", "Authorization", "filename", "user"],
       })
     );
     app.use(cookieParser());
