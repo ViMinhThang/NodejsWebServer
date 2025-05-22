@@ -60,7 +60,7 @@ const uploadVideo = asyncHandler(async (req, res, next) => {
   } catch (e) {
     util.deleteFolder(`./storage/${videoId}`);
     if (e.code !== ECONNRESET) {
-      return handleErr(e);
+      return throw new Error(`${e}`)
     }
   }
 });
