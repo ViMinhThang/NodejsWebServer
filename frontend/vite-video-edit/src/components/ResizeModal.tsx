@@ -116,7 +116,7 @@ const UploadPhoto: React.FC<UploadPhotoProps> = (props) => {
             /** @API call */
             <a
               className="button button-blue button-small"
-              href={`/api/videos/get-video-asset?videoId=${props.videoId}&type=resize&dimensions=${dimensions}`}
+              href={`${import.meta.env.VITE_API_BASE_URL}/videos/get-video-asset?videoId=${props.videoId}&type=resize&dimensions=${dimensions}`}
             >
               Download
             </a>
