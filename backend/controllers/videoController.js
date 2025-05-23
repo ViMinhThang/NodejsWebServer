@@ -38,7 +38,7 @@ const uploadVideo = asyncHandler(async (req, res, next) => {
       extractedAudio: false,
     });
     await video.save();
-
+      
     res.status(201).json({
       status: "success",
       message: "The file was uploaded successfully",

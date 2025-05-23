@@ -22,7 +22,7 @@ const startServer = async () => {
       cors({
         origin: allowedOrigin,
         credentials: true,
-        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
         allowedHeaders: ["Content-Type", "Authorization", "filename", "user"],
       })
     );
@@ -31,6 +31,7 @@ const startServer = async () => {
       cors({
         origin: allowedOrigin,
         credentials: true,
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
         allowedHeaders: ["Content-Type", "Authorization", "filename", "user"],
       })
     );
